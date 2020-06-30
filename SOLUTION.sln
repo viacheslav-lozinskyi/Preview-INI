@@ -13,6 +13,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "picture", "picture", "{6F1C
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "video", "video", "{9CBB7A81-0908-47B3-9CEB-29DA5CD08988}"
+	ProjectSection(SolutionItems) = preProject
+		resource\video\Presentation1.gif = resource\video\Presentation1.gif
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "preview-ini.vs", "application\preview-ini.vs\preview-ini.vs.csproj", "{983DE115-6C47-46DA-AB77-CBBE76649162}"
 EndProject
