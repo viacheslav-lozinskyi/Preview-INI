@@ -33,7 +33,7 @@ namespace resource.preview
                     context.
                         Clear().
                         SetContent(a_Context1.Message).
-                        SetFlag(atom.Trace.NAME.FLAG.ERROR).
+                        SetFlag(NAME.FLAG.ERROR).
                         SetLevel(1).
                         Send();
                 }
@@ -73,7 +73,7 @@ namespace resource.preview
                         Clear().
                         SetContent(a_Context1.KeyName).
                         SetValue(a_Context1.Value).
-                        SetPattern(atom.Trace.NAME.PATTERN.VARIABLE).
+                        SetPattern(NAME.PATTERN.VARIABLE).
                         SetComment(__GetComment(a_Context1.Value)).
                         SetHint("[[Data type]]").
                         SetLevel(2).
