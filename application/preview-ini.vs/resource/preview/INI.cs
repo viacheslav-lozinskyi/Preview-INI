@@ -26,22 +26,29 @@ namespace resource.preview
                 if (__Execute(a_Context, context, File.ReadAllText(url), ";")) return;
                 if (__Execute(a_Context, context, File.ReadAllText(url), "#")) return;
             }
+            if (GetState() == STATE.CANCEL)
+            {
+                context.
+                    SendWarning(1, NAME.WARNING.TERMINATED);
+                return;
+            }
             if (a_Context.HasError)
             {
                 foreach (var a_Context1 in a_Context.Errors)
                 {
                     context.
-                        Clear().
-                        SetContent(a_Context1.Message).
-                        SetFlag(NAME.FLAG.ERROR).
-                        SetLevel(1).
-                        Send();
+                        SendError(1, a_Context1.Message);
                 }
             }
         }
 
         private static bool __Execute(IniDataParser parser, atom.Trace context, string data, string comment)
         {
+            if (GetState() == STATE.CANCEL)
+            {
+                return false;
+            }
+            else
             {
                 parser.Configuration.CommentString = comment;
             }
@@ -59,6 +66,11 @@ namespace resource.preview
         {
             foreach (var a_Context in data.Sections)
             {
+                if (GetState() == STATE.CANCEL)
+                {
+                    return;
+                }
+                else
                 {
                     context.
                         Clear().
