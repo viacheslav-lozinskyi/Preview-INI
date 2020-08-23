@@ -25,7 +25,7 @@ namespace resource.package
             public const string EXTENSION = ".INI";
             public const string GUID = "0B50E4AD-3B5C-4EAA-96F2-BBEACC945B7C";
             public const string NAME = "Preview-INI";
-            public const string VERSION = "1.0.4";
+            public const string VERSION = "1.0.5";
         }
 
         protected override async Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)

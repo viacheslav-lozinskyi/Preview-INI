@@ -87,7 +87,7 @@ namespace resource.preview
                         SetValue(a_Context1.Value).
                         SetPattern(NAME.PATTERN.VARIABLE).
                         SetComment(__GetComment(a_Context1.Value)).
-                        SetHint("[[Data type]]").
+                        SetCommentHint("[[Data type]]").
                         SetLevel(2).
                         Send();
                 }
