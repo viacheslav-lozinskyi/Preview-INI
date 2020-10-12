@@ -11,11 +11,7 @@ namespace resource.package
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
     [InstalledProductRegistration(CONSTANT.NAME, CONSTANT.DESCRIPTION, CONSTANT.VERSION)]
     [Guid(CONSTANT.GUID)]
-    [ProvideAutoLoad(VSConstants.UICONTEXT.FirstLaunchSetup_string, PackageAutoLoadFlags.BackgroundLoad)]
     [ProvideAutoLoad(VSConstants.UICONTEXT.ShellInitialized_string, PackageAutoLoadFlags.BackgroundLoad)]
-    [ProvideAutoLoad(VSConstants.UICONTEXT.SolutionExists_string, PackageAutoLoadFlags.BackgroundLoad)]
-    [ProvideAutoLoad(VSConstants.UICONTEXT.SolutionHasMultipleProjects_string, PackageAutoLoadFlags.BackgroundLoad)]
-    [ProvideAutoLoad(VSConstants.UICONTEXT.SolutionHasSingleProject_string, PackageAutoLoadFlags.BackgroundLoad)]
     public sealed class PreviewINIPackage : AsyncPackage
     {
         internal static class CONSTANT
@@ -25,15 +21,17 @@ namespace resource.package
             public const string EXTENSION = ".INI";
             public const string GUID = "0B50E4AD-3B5C-4EAA-96F2-BBEACC945B7C";
             public const string NAME = "Preview-INI";
-            public const string VERSION = "1.0.5";
+            public const string VERSION = "1.0.6";
         }
 
         protected override async Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
         {
-            await JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
             {
                 cartridge.AnyPreview.Connect();
                 cartridge.AnyPreview.Register(cartridge.AnyPreview.MODE.PREVIEW, CONSTANT.EXTENSION, new preview.INI());
+            }
+            {
+                await JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
             }
         }
 
