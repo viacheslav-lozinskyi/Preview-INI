@@ -6,7 +6,7 @@ using System.IO;
 
 namespace resource.preview
 {
-    public class INI : cartridge.AnyPreview
+    internal class VSPreview : cartridge.AnyPreview
     {
         protected override void _Execute(atom.Trace context, string url)
         {
@@ -73,7 +73,6 @@ namespace resource.preview
                 else
                 {
                     context.
-                        Clear().
                         SetContent(a_Context.SectionName).
                         SetComment("[[Section]]").
                         SetLevel(1).
@@ -82,10 +81,9 @@ namespace resource.preview
                 foreach (var a_Context1 in a_Context.Keys)
                 {
                     context.
-                        Clear().
                         SetContent(a_Context1.KeyName).
                         SetValue(a_Context1.Value).
-                        SetPattern(NAME.PATTERN.VARIABLE).
+                        SetType(NAME.TYPE.VARIABLE).
                         SetComment(__GetComment(a_Context1.Value)).
                         SetCommentHint("[[Data type]]").
                         SetLevel(2).
