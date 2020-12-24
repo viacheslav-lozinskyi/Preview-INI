@@ -8,7 +8,7 @@ namespace resource.preview
 {
     internal class VSPreview : cartridge.AnyPreview
     {
-        protected override void _Execute(atom.Trace context, string url)
+        protected override void _Execute(atom.Trace context, string url, int level)
         {
             var a_Context = new IniDataParser();
             {
@@ -23,26 +23,21 @@ namespace resource.preview
                 a_Context.Configuration.SkipInvalidLines = true;
             }
             {
-                if (__Execute(a_Context, context, File.ReadAllText(url), ";")) return;
-                if (__Execute(a_Context, context, File.ReadAllText(url), "#")) return;
+                if (__Execute(a_Context, context, level, File.ReadAllText(url), ";")) return;
+                if (__Execute(a_Context, context, level, File.ReadAllText(url), "#")) return;
             }
-            if (GetState() == STATE.CANCEL)
-            {
-                context.
-                    SendWarning(1, NAME.WARNING.TERMINATED);
-                return;
-            }
-            if (a_Context.HasError)
+            if (a_Context.HasError && (GetState() != STATE.CANCEL))
             {
                 foreach (var a_Context1 in a_Context.Errors)
                 {
                     context.
-                        SendError(1, a_Context1.Message);
+                        Send(NAME.SOURCE.PREVIEW, NAME.TYPE.ERROR, level, a_Context1.Message).
+                        SendPreview(NAME.TYPE.ERROR, url);
                 }
             }
         }
 
-        private static bool __Execute(IniDataParser parser, atom.Trace context, string data, string comment)
+        private static bool __Execute(IniDataParser parser, atom.Trace context, int level, string data, string comment)
         {
             if (GetState() == STATE.CANCEL)
             {
@@ -56,13 +51,13 @@ namespace resource.preview
                 var a_Context = parser.Parse(data);
                 if (parser.HasError == false)
                 {
-                    __Execute(a_Context, context);
+                    __Execute(a_Context, context, level);
                 }
             }
             return parser.HasError == false;
         }
 
-        private static void __Execute(IniData data, atom.Trace context)
+        private static void __Execute(IniData data, atom.Trace context, int level)
         {
             foreach (var a_Context in data.Sections)
             {
@@ -73,21 +68,14 @@ namespace resource.preview
                 else
                 {
                     context.
-                        SetContent(a_Context.SectionName).
-                        SetComment("[[Section]]").
-                        SetLevel(1).
-                        Send();
+                        SetComment("[[Section]]", "").
+                        Send(NAME.SOURCE.PREVIEW, NAME.TYPE.INFO, level, a_Context.SectionName);
                 }
                 foreach (var a_Context1 in a_Context.Keys)
                 {
                     context.
-                        SetContent(a_Context1.KeyName).
-                        SetValue(a_Context1.Value).
-                        SetType(NAME.TYPE.VARIABLE).
-                        SetComment(__GetComment(a_Context1.Value)).
-                        SetCommentHint("[[Data type]]").
-                        SetLevel(2).
-                        Send();
+                        SetComment(__GetComment(a_Context1.Value), "[[Data type]]").
+                        Send(NAME.SOURCE.PREVIEW, NAME.TYPE.VARIABLE, level + 1, a_Context1.KeyName, a_Context1.Value);
                 }
             }
         }
