@@ -1,4 +1,3 @@
-
 using IniParser.Model;
 using IniParser.Parser;
 using System;
@@ -6,9 +5,9 @@ using System.IO;
 
 namespace resource.preview
 {
-    internal class VSPreview : cartridge.AnyPreview
+    internal class VSPreview : extension.AnyPreview
     {
-        protected override void _Execute(atom.Trace context, string url, int level)
+        protected override void _Execute(atom.Trace context, int level, string url, string file)
         {
             var a_Context = new IniDataParser();
             {
@@ -23,23 +22,26 @@ namespace resource.preview
                 a_Context.Configuration.SkipInvalidLines = true;
             }
             {
-                if (__Execute(a_Context, context, level, File.ReadAllText(url), ";")) return;
-                if (__Execute(a_Context, context, level, File.ReadAllText(url), "#")) return;
+                if (__Execute(context, level, a_Context, File.ReadAllText(file), ";")) return;
+                if (__Execute(context, level, a_Context, File.ReadAllText(file), "#")) return;
             }
-            if (a_Context.HasError && (GetState() != STATE.CANCEL))
+            if (a_Context.HasError && (GetState() != NAME.STATE.CANCEL))
             {
                 foreach (var a_Context1 in a_Context.Errors)
                 {
                     context.
-                        Send(NAME.SOURCE.PREVIEW, NAME.TYPE.ERROR, level, a_Context1.Message).
+                        Send(NAME.SOURCE.PREVIEW, NAME.TYPE.ERROR, level, a_Context1.Message);
+                }
+                {
+                    context.
                         SendPreview(NAME.TYPE.ERROR, url);
                 }
             }
         }
 
-        private static bool __Execute(IniDataParser parser, atom.Trace context, int level, string data, string comment)
+        private static bool __Execute(atom.Trace context, int level, IniDataParser parser, string data, string comment)
         {
-            if (GetState() == STATE.CANCEL)
+            if (GetState() == NAME.STATE.CANCEL)
             {
                 return false;
             }
@@ -51,59 +53,59 @@ namespace resource.preview
                 var a_Context = parser.Parse(data);
                 if (parser.HasError == false)
                 {
-                    __Execute(a_Context, context, level);
+                    __Execute(context, level, a_Context);
                 }
             }
             return parser.HasError == false;
         }
 
-        private static void __Execute(IniData data, atom.Trace context, int level)
+        private static void __Execute(atom.Trace context, int level, IniData data)
         {
             foreach (var a_Context in data.Sections)
             {
-                if (GetState() == STATE.CANCEL)
+                if (GetState() == NAME.STATE.CANCEL)
                 {
                     return;
                 }
                 else
                 {
                     context.
-                        SetComment("[[Section]]", "").
-                        Send(NAME.SOURCE.PREVIEW, NAME.TYPE.INFO, level, a_Context.SectionName);
+                        SetComment("[[[Section]]]").
+                        Send(NAME.SOURCE.PREVIEW, NAME.TYPE.PARAMETER, level, a_Context.SectionName);
                 }
                 foreach (var a_Context1 in a_Context.Keys)
                 {
                     context.
-                        SetComment(__GetComment(a_Context1.Value), "[[Data type]]").
-                        Send(NAME.SOURCE.PREVIEW, NAME.TYPE.VARIABLE, level + 1, a_Context1.KeyName, a_Context1.Value);
+                        SetComment(__GetComment(a_Context1.Value), "[[[Data Type]]]").
+                        Send(NAME.SOURCE.PREVIEW, NAME.TYPE.PARAMETER, level + 1, a_Context1.KeyName, a_Context1.Value);
                 }
             }
         }
 
-        private static string __GetComment(string value)
+        private static string __GetComment(string data)
         {
             {
-                var a_Context = value.ToUpper();
+                var a_Context = data.ToUpper();
                 if ((a_Context == "TRUE") || (a_Context == "FALSE"))
                 {
-                    return "[[Boolean]]";
+                    return "[[[Boolean]]]";
                 }
             }
             {
                 var a_Context = (Int64)0;
-                if (Int64.TryParse(value, out a_Context))
+                if (Int64.TryParse(data, out a_Context))
                 {
-                    return "[[Integer]]";
+                    return "[[[Integer]]]";
                 }
             }
             {
                 var a_Context = (double)0;
-                if (double.TryParse(value, out a_Context))
+                if (double.TryParse(data, out a_Context))
                 {
-                    return "[[Double]]";
+                    return "[[[Double]]]";
                 }
             }
-            return "[[String]]";
+            return "[[[String]]]";
         }
     };
 }
