@@ -8,6 +8,12 @@
 
 ---
 
+[![MetaOutput](https://www.metaoutput.net/_functions/watch?source=GITHUB&size=128x128&project=Preview-INI&url=https://marketplace.visualstudio.com/items?itemName=ViacheslavLozinskyi.Preview-INI)](https://www.metaoutput.net/?utm_source=github.com&utm_medium=referral&utm_campaign=redirect-to-homepage&utm_term=2021-11-21&utm_content=Preview-INI)
+
+### This extension is working only with installed [MetaOutput](https://www.metaoutput.net/?utm_source=github.com&utm_medium=referral&utm_campaign=redirect-to-homepage&utm_term=2021-11-21&utm_content=Preview-INI) extension!
+
+---
+
 ### Now you can look inside [INI](https://en.wikipedia.org/wiki/INI_file) files not opening it.
 
 ---
@@ -16,16 +22,6 @@
 
 ---
 
-Download the extension from the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=ViacheslavLozinskyi.Preview-INI)
-
----
-
-Data visualization is based on [MetaOutput](https://www.metaoutput.net/?utm_source=github.com&utm_medium=referral&utm_campaign=redirect-to-homepage&utm_term=2021-11-21&utm_content=preview-ini)
+Data visualization is based on [MetaOutput](https://www.metaoutput.net/?utm_source=github.com&utm_medium=referral&utm_campaign=redirect-to-homepage&utm_term=2021-11-21&utm_content=Preview-INI)
 
 Data extraction is based on [INI-Parser](https://github.com/rickyah/ini-parser)
-
----
-
-## WARNING:
-
-Correct work of this extension in **Visual Studio 2022** is possible when **[MetaOutput 2022](https://marketplace.visualstudio.com/items?itemName=ViacheslavLozinskyi.MetaOutput-2022)** extension is installed.
