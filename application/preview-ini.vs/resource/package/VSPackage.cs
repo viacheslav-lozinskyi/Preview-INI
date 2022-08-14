@@ -25,7 +25,7 @@ namespace resource.package
             public const string DESCRIPTION = "Quick preview of INI files";
             public const string GUID = "0B50E4AD-3B5C-4EAA-96F2-BBEACC945B7C";
             public const string NAME = "Preview-INI";
-            public const string VERSION = "1.0.11";
+            public const string VERSION = "1.0.12";
         }
 
         protected override async Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
