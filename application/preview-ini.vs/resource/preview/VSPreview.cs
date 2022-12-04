@@ -30,11 +30,11 @@ namespace resource.preview
                 foreach (var a_Context1 in a_Context.Errors)
                 {
                     context.
-                        Send(NAME.SOURCE.PREVIEW, NAME.TYPE.ERROR, level, a_Context1.Message);
+                        Send(NAME.SOURCE.PREVIEW, NAME.EVENT.ERROR, level, a_Context1.Message);
                 }
                 {
                     context.
-                        SendPreview(NAME.TYPE.ERROR, url);
+                        SendPreview(NAME.EVENT.ERROR, url);
                 }
             }
         }
@@ -71,13 +71,13 @@ namespace resource.preview
                 {
                     context.
                         SetComment("[[[Section]]]").
-                        Send(NAME.SOURCE.PREVIEW, NAME.TYPE.PARAMETER, level, a_Context.SectionName);
+                        Send(NAME.SOURCE.PREVIEW, NAME.EVENT.PARAMETER, level, a_Context.SectionName);
                 }
                 foreach (var a_Context1 in a_Context.Keys)
                 {
                     context.
                         SetComment(__GetComment(a_Context1.Value), "[[[Data Type]]]").
-                        Send(NAME.SOURCE.PREVIEW, NAME.TYPE.PARAMETER, level + 1, a_Context1.KeyName, a_Context1.Value);
+                        Send(NAME.SOURCE.PREVIEW, NAME.EVENT.PARAMETER, level + 1, a_Context1.KeyName, a_Context1.Value);
                 }
             }
         }
