@@ -25,6 +25,7 @@ namespace resource.package
             public const string COPYRIGHT = "Copyright (c) 2020-2023 by Viacheslav Lozinskyi. All rights reserved.";
             public const string DESCRIPTION = "Quick preview of INI files";
             public const string GUID = "0B50E4AD-3B5C-4EAA-96F2-BBEACC945B7C";
+            public const string HOST = "MetaOutput";
             public const string NAME = "Preview-INI";
             public const string VERSION = "1.0.14";
         }
@@ -48,7 +49,7 @@ namespace resource.package
                         var a_Context1 = (OutputWindowPane)null;
                         for (var i = a_Context.ToolWindows.OutputWindow.OutputWindowPanes.Count; i >= 1; i--)
                         {
-                            if (a_Context.ToolWindows.OutputWindow.OutputWindowPanes.Item(i).Name == "MetaOutput")
+                            if (a_Context.ToolWindows.OutputWindow.OutputWindowPanes.Item(i).Name == CONSTANT.HOST)
                             {
                                 a_Context1 = a_Context.ToolWindows.OutputWindow.OutputWindowPanes.Item(i);
                                 break;
@@ -56,7 +57,7 @@ namespace resource.package
                         }
                         if (a_Context1 == null)
                         {
-                            a_Context1 = a_Context.ToolWindows.OutputWindow.OutputWindowPanes.Add("MetaOutput");
+                            a_Context1 = a_Context.ToolWindows.OutputWindow.OutputWindowPanes.Add(CONSTANT.HOST);
                         }
                         if (a_Context1 != null)
                         {
