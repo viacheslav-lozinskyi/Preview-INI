@@ -25,7 +25,7 @@ namespace resource.preview
                 if (__Execute(context, level, a_Context, File.ReadAllText(file), ";")) return;
                 if (__Execute(context, level, a_Context, File.ReadAllText(file), "#")) return;
             }
-            if (a_Context.HasError && (GetState() != NAME.STATE.CANCEL))
+            if (a_Context.HasError && (GetState() != NAME.STATE.WORK.CANCEL))
             {
                 foreach (var a_Context1 in a_Context.Errors)
                 {
@@ -41,7 +41,7 @@ namespace resource.preview
 
         private static bool __Execute(atom.Trace context, int level, IniDataParser parser, string data, string comment)
         {
-            if (GetState() == NAME.STATE.CANCEL)
+            if (GetState() == NAME.STATE.WORK.CANCEL)
             {
                 return false;
             }
@@ -63,7 +63,7 @@ namespace resource.preview
         {
             foreach (var a_Context in data.Sections)
             {
-                if (GetState() == NAME.STATE.CANCEL)
+                if (GetState() == NAME.STATE.WORK.CANCEL)
                 {
                     return;
                 }
